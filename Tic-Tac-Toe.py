@@ -51,3 +51,57 @@ elif "_" not in input:
 elif not isWinner(input, 'X') or not isWinner(input, 'O'):
     if "_" in input:
         print("Game not finished")
+
+#stage 4/5: First move!
+symbols = input("Enter cells:")
+
+
+print('---------')
+print('|', symbols[0], symbols[1], symbols[2], '|')
+print('|', symbols[3], symbols[4], symbols[5], '|')
+print('|', symbols[6], symbols[7], symbols[8], '|')
+print('---------')
+
+
+while True:
+    coord = input('Enter the coordinates: ')
+
+    if coord.isalpha():
+        print("You should enter numbers!")
+        pass
+
+    else:
+        coord_col, coord_row = coord.split()
+        coord_x = int(coord_col) - 1
+        coord_y = 3 - int(coord_row)
+        index = (coord_y * 3) + coord_x
+
+        if index <= 8:
+
+            if 1 <= int(coord_col) <= 3 and 1 <= int(coord_row) <= 3:
+
+                if symbols[index] != '_':
+                    print("This cell is occupied! Choose another one!")
+                    pass
+
+                else:
+
+                    for j in range(len(symbols)):
+                        symbols = [i for i in symbols]
+                        if symbols[index] == '_':
+                            symbols[index] = 'X'
+                            print('---------')
+                            print('|', symbols[0], symbols[1], symbols[2], '|')
+                            print('|', symbols[3], symbols[4], symbols[5], '|')
+                            print('|', symbols[6], symbols[7], symbols[8], '|')
+                            print('---------')
+                            break
+
+                    break
+            else:
+                print("Coordinates should be from 1 to 3!")
+                pass
+
+        else:
+            print("Coordinates should be from 1 to 3!")
+            pass
