@@ -105,3 +105,94 @@ while True:
         else:
             print("Coordinates should be from 1 to 3!")
             pass
+
+#stage 5/5: Fight!
+
+def check_row(list_):
+    new_list = []
+    for i in range(3):
+        if list_[i][0] == list_[i][1] == list_[i][2]:
+            if list_[i][0] != ' ':
+                new_list.append(list_[0][i])
+    return new_list
+
+
+def check_column(list_):
+    new_list = []
+    for i in range(3):
+        if list_[0][i] == list_[1][i] == list_[2][i]:
+            if list_[0][i] != ' ':
+                new_list.append(list_[0][i])
+    return new_list
+
+
+def check_diagonal(list_):
+    new_list = []
+    if list_[0][0] == list_[1][1] == list_[2][2] or list_[2][0] == list_[1][1] == list_[0][2]:
+        if list_[1][1] != ' ':
+            new_list.append(list_[1][1])
+    return new_list
+
+tic_tac_toe = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
+t_t_t = [[tic_tac_toe[0], tic_tac_toe[1], tic_tac_toe[2]],
+         [tic_tac_toe[3], tic_tac_toe[4], tic_tac_toe[5]],
+         [tic_tac_toe[6], tic_tac_toe[7], tic_tac_toe[8]]]
+
+
+def t_t_t_print():
+    print(f'''---------
+| {t_t_t[0][0]} {t_t_t[0][1]} {t_t_t[0][2]} |
+| {t_t_t[1][0]} {t_t_t[1][1]} {t_t_t[1][2]} |
+| {t_t_t[2][0]} {t_t_t[2][1]} {t_t_t[2][2]} |
+---------''')
+
+winner = check_column(t_t_t) + check_row(t_t_t) + check_diagonal(t_t_t)
+t_t_t_print()
+
+while True:
+    winner = check_column(t_t_t) + check_row(t_t_t) + check_diagonal(t_t_t)
+    moves = 0
+    coords = input('Enter the coordinates: ')
+    y, x = coords.split()
+    if not (x.isdigit() and y.isdigit()):
+        print('You should enter numbers!')
+        continue
+    if int(x) not in range(1, 4) or int(y) not in range(1, 4):
+        print('Coordinates should be from 1 to 3!')
+        continue
+    y = int(y) - 1
+    x = 3 - int(x)
+    if t_t_t[x][y] == ' ' and moves % 2 == 0:
+        t_t_t[x][y] = 'X'
+        t_t_t_print()
+        if abs(tic_tac_toe.count('X') - tic_tac_toe.count('O')) > 1:
+            print('Impossible')
+            break
+        elif len(winner) > 1:
+            print('Impossible')
+            break
+
+        elif len(winner) == 0 and ' ' not in tic_tac_toe:
+            print('Draw')
+            break
+        elif winner:
+            print(f'{winner[0]} wins')
+            break
+    elif t_t_t[x][y] == ' ' and moves % 2 == 1:
+        t_t_t[x][y] = 'O'
+        t_t_t_print()
+        if abs(tic_tac_toe.count('X') - tic_tac_toe.count('O')) > 1:
+            print('Impossible')
+            break
+        elif len(winner) > 1:
+            print('Impossible')
+            break
+        
+        elif len(winner) == 0 and ' ' not in tic_tac_toe:
+            print('Draw')
+            break
+        elif winner:
+            print(f'{winner[0]} wins')
+            break
+    else:
+        print('This cell is occupied! Choose another one!')
